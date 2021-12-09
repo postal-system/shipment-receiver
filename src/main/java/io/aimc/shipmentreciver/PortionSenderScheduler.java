@@ -29,7 +29,7 @@ public class PortionSenderScheduler {
     }
 
     //todo delete this
-    @RabbitListener(queues = "${kafka.rabbitmq.queue}")
+    @RabbitListener(queues = "${spring.rabbitmq.queue}")
     public void listen(String in) {
         System.out.println("Message read from portionsofshipments : " + in);
     }
