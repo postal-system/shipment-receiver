@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/shipment_store
+    username: user
+    password: password
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic: "shipments"
+    consumer:
+      auto-offset-reset: earliest
+      groupId: "shipment"
+  feign:
+    client:
+      name: "personsregister"
+      url: "http://localhost:8080"
+  rabbitmq:
+    queue: "portionsofshipments"

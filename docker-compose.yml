@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  db:
+    image: 'postgres:latest'
+    container_name: shipment_store_db
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=shipment_store
+  rabbitmq:
+    image: 'rabbitmq:latest'
+    container_name: rabbitmqbroker
+    ports:
+      # AMQP protocol port
+      - 5672:5672
+      # HTTP management UI
+      - 15672:15672
