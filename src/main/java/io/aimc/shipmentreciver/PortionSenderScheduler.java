@@ -23,7 +23,7 @@ public class PortionSenderScheduler {
 
     @Scheduled(fixedDelay = 50000)
     public void send() throws JsonProcessingException {
-        rabbitTemplate.convertAndSend(queue, objectMapper.writeValueAsString(portionService.get()));
+        rabbitTemplate.convertAndSend(queue, portionService.get());
         log.info("send to rabbit");
     }
 }
