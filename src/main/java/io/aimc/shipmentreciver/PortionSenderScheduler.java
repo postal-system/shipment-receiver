@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.aimc.shipmentreciver.service.PortionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,11 +25,5 @@ public class PortionSenderScheduler {
     public void send() throws JsonProcessingException {
         rabbitTemplate.convertAndSend(queue, objectMapper.writeValueAsString(portionService.get()));
         log.info("send to rabbit");
-    }
-
-    //todo delete this
-    @RabbitListener(queues = "${spring.rabbitmq.queue}")
-    public void listen(String in) {
-        System.out.println("Message read from portionsofshipments : " + in);
     }
 }

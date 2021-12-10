@@ -9,6 +9,5 @@ class ShipmentReceiverApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-	//todo: test
 
 }

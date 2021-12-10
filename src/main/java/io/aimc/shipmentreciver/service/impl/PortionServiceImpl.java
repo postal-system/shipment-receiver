@@ -18,10 +18,11 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class PortionServiceImpl implements PortionService {
     private final ShipmentRepository shipmentRepository;
+    private final int portionSize = 10;
 
     @Override
     public Portion get() {
-        List<Shipment> shipments = shipmentRepository.findNotIncludedInPortion(5);//todo изменить на 50 и выпилить отсюда константу
+        List<Shipment> shipments = shipmentRepository.findNotIncludedInPortion(portionSize);
         Portion portion = Portion.builder().id(UUID.randomUUID()).build();
         shipments.forEach(shipment -> shipment.setPortionId(portion.getId()));
         portion.setShipmentIds(shipments.stream().map(Shipment::getSourceId).collect(toList()));
