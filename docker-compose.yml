@@ -8,8 +8,8 @@ services:
     ports:
       - '5433:5432'
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mcpmwC8gGwVKr4Q9xCKZEzEgS
       - POSTGRES_DB=shipment_store
   rabbitmq:
     image: 'rabbitmq:latest'
@@ -19,3 +19,12 @@ services:
       - 5672:5672
       # HTTP management UI
       - 15672:15672
+
+  shipmentreceiverapp:
+    image: 'application:latest'
+    build:
+      context: .
+    container_name: shipmentgeneratorapp
+    depends_on:
+      - db
+      - rabbitmq
