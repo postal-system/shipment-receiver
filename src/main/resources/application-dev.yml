@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://130.193.56.118:5433/shipment_store
+    username: postgres
+    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: 130.193.56.118:9092
+    topic: "shipments"
+    consumer:
+      auto-offset-reset: earliest
+      groupId: "shipment"
+  feign:
+    client:
+      name: "personsregister"
+      url: "http://130.193.56.118:8081"
+  rabbitmq:
+    queue: "portionsofshipments"
+scheduler:
+  fixed-delay: 3600000
