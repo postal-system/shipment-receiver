@@ -1,7 +1,6 @@
 package io.aimc.shipmentreciver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.aimc.shipmentreciver.service.PortionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +15,12 @@ import org.springframework.stereotype.Component;
 public class PortionSenderScheduler {
     private final PortionService portionService;
     private final RabbitTemplate rabbitTemplate;
-    private final ObjectMapper objectMapper;
 
     @Value("${spring.rabbitmq.queue}")
     private String queue;
 
-    @Scheduled(fixedDelay = 50000)
-    public void send() throws JsonProcessingException {
+    @Scheduled(fixedDelayString = "${scheduler.fixed-delay}")
+    public void send(){
         rabbitTemplate.convertAndSend(queue, portionService.get());
         log.info("send to rabbit");
     }

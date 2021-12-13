@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/shipment_store
-    username: user
-    password: password
+    username: postgres
+    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
@@ -17,3 +17,5 @@ spring:
       url: "http://localhost:8081"
   rabbitmq:
     queue: "portionsofshipments"
+scheduler:
+  fixed-delay: 3600000
