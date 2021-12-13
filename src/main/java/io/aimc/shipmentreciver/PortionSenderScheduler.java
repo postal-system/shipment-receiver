@@ -1,6 +1,5 @@
 package io.aimc.shipmentreciver;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.aimc.shipmentreciver.service.PortionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ public class PortionSenderScheduler {
     private String queue;
 
     @Scheduled(fixedDelayString = "${scheduler.fixed-delay}")
-    public void send(){
+    public void send() {
         rabbitTemplate.convertAndSend(queue, portionService.get());
         log.info("send to rabbit");
     }
