@@ -23,6 +23,7 @@ public class PortionServiceImpl implements PortionService {
     @Override
     public Portion get() {
         List<Shipment> shipments = shipmentRepository.findNotIncludedInPortion(portionSize);
+        log.info("shipments not included in portion {}", shipments);
         Portion portion = Portion.builder().id(UUID.randomUUID()).build();
         shipments.forEach(shipment -> shipment.setPortionId(portion.getId()));
         portion.setShipmentIds(shipments.stream().map(Shipment::getSourceId).collect(toList()));
