@@ -6,8 +6,12 @@ import io.aimc.shipmentreciver.repository.ShipmentRepository;
 import io.aimc.shipmentreciver.service.PortionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpConnectException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,16 +22,16 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class PortionServiceImpl implements PortionService {
     private final ShipmentRepository shipmentRepository;
-    private final int portionSize = 10;
+    @Value("${portion.size}")
+    private int portionSize;
 
     @Override
-    public Portion get() {
-        List<Shipment> shipments = shipmentRepository.findNotIncludedInPortion(portionSize);
-        log.info("shipments not included in portion {}", shipments);
-        Portion portion = Portion.builder().id(UUID.randomUUID()).build();
-        shipments.forEach(shipment -> shipment.setPortionId(portion.getId()));
-        portion.setShipmentIds(shipments.stream().map(Shipment::getSourceId).collect(toList()));
-        shipmentRepository.saveAll(shipments);
-        return portion;
+    @Transactional(rollbackOn = {AmqpConnectException.class, SQLException.class})
+    public Portion createPortion() {
+        UUID portionId = UUID.randomUUID();
+        shipmentRepository.addToPortion(portionSize, portionId);
+        List<Shipment> shipments = shipmentRepository.findAllByPortionId(portionId);
+        log.info("processed shipment {}", shipments);
+        return new Portion(portionId, shipments.stream().map(Shipment::getSourceId).collect(toList()));
     }
 }
