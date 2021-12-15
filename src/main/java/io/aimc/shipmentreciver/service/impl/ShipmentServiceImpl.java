@@ -1,8 +1,7 @@
 package io.aimc.shipmentreciver.service.impl;
 
 import feign.FeignException;
-import io.aimc.shipmentreciver.client.ReceiverClient;
-import io.aimc.shipmentreciver.dto.ShipmentDto;
+import io.aimc.shipmentreciver.client.PersonClient;
 import io.aimc.shipmentreciver.entity.Shipment;
 import io.aimc.shipmentreciver.model.Person;
 import io.aimc.shipmentreciver.model.RawShipment;
@@ -14,21 +13,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ShipmentServiceImpl implements ShipmentService {
-    private final ReceiverClient receiverClient;
+    private final PersonClient personClient;
     private final ShipmentRepository shipmentRepository;
 
     @Override
     public void add(RawShipment rawShipment) {
         try {
-            Person person = receiverClient.getById(rawShipment.getIdReceiver());
+            Person person = personClient.getById(rawShipment.getIdReceiver());
             Shipment shipment = Shipment.builder()
                     .sourceId(rawShipment.getSourceId())
                     .rawShipment(rawShipment)
@@ -37,13 +33,14 @@ public class ShipmentServiceImpl implements ShipmentService {
                     .fullName(person.getFirstName().concat(" ").concat(person.getLastName()).concat(" ").concat(person.getPatronymic()))
                     .build();
             shipmentRepository.save(shipment);
+            log.info("saved shipment {}",shipment);
         } catch (FeignException.NotFound e) {
             log.error("person not found");
         }
     }
 
     @Override
-    public List<ShipmentDto> getAllByIds(List<UUID> ids) {
-        return shipmentRepository.findAllById(ids).stream().map(ShipmentDto::fromShipment).collect(toList());
+    public List<Shipment> getAllByIds(List<UUID> ids) {
+        return shipmentRepository.findAllById(ids);
     }
 }

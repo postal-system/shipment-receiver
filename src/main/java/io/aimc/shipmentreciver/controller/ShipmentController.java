@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
 @RequestMapping(value = "/api/shipments")
 public class ShipmentController {
@@ -20,7 +22,7 @@ public class ShipmentController {
 
     @GetMapping()
     public ResponseEntity<List<ShipmentDto>> getAllByIds(@RequestParam("ids") List<UUID> ids) {
-        return ResponseEntity.ok(shipmentService.getAllByIds(ids));
+        return ResponseEntity.ok(shipmentService.getAllByIds(ids).stream().map(ShipmentDto::fromShipment).collect(toList()));
     }
 
 }
