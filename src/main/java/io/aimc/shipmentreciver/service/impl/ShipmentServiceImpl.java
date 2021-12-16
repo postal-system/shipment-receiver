@@ -4,7 +4,7 @@ import feign.FeignException;
 import io.aimc.shipmentreciver.client.PersonClient;
 import io.aimc.shipmentreciver.entity.Shipment;
 import io.aimc.shipmentreciver.model.Person;
-import io.aimc.shipmentreciver.model.RawShipment;
+import io.aimc.shipmentreciver.dto.RawShipmentDto;
 import io.aimc.shipmentreciver.repository.ShipmentRepository;
 import io.aimc.shipmentreciver.service.ShipmentService;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ public class ShipmentServiceImpl implements ShipmentService {
     private final ShipmentRepository shipmentRepository;
 
     @Override
-    public void add(RawShipment rawShipment) {
+    public void add(RawShipmentDto rawShipmentDto) {
         try {
-            Person person = personClient.getById(rawShipment.getIdReceiver());
+            Person person = personClient.getById(rawShipmentDto.getIdReceiver());
             Shipment shipment = Shipment.builder()
-                    .sourceId(rawShipment.getSourceId())
-                    .rawShipment(rawShipment)
-                    .sender(rawShipment.getSender())
-                    .content(rawShipment.getContent())
+                    .sourceId(rawShipmentDto.getSourceId())
+                    .rawShipmentDto(rawShipmentDto)
+                    .sender(rawShipmentDto.getSender())
+                    .content(rawShipmentDto.getContent())
                     .fullName(person.getFirstName().concat(" ").concat(person.getLastName()).concat(" ").concat(person.getPatronymic()))
                     .build();
             shipmentRepository.save(shipment);

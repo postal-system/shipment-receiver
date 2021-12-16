@@ -2,8 +2,7 @@ package io.aimc.shipmentreciver.controller;
 
 import io.aimc.shipmentreciver.dto.ShipmentDto;
 import io.aimc.shipmentreciver.service.ShipmentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +14,14 @@ import java.util.UUID;
 import static java.util.stream.Collectors.toList;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/shipments")
 public class ShipmentController {
-    @Autowired
-    private ShipmentService shipmentService;
+    private final ShipmentService shipmentService;
 
     @GetMapping()
-    public ResponseEntity<List<ShipmentDto>> getAllByIds(@RequestParam("ids") List<UUID> ids) {
-        return ResponseEntity.ok(shipmentService.getAllByIds(ids).stream().map(ShipmentDto::fromShipment).collect(toList()));
+    public List<ShipmentDto> getAllByIds(@RequestParam("ids") List<UUID> ids) {
+        return shipmentService.getAllByIds(ids).stream().map(ShipmentDto::fromShipment).collect(toList());
     }
 
 }

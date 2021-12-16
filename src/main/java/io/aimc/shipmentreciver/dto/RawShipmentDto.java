@@ -1,4 +1,4 @@
-package io.aimc.shipmentreciver.model;
+package io.aimc.shipmentreciver.dto;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Data
-public class RawShipment {
+public class RawShipmentDto {
     private UUID sourceId;
     private Instant timestamp;
     private Integer idReceiver;
