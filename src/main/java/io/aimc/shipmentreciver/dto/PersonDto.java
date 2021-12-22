@@ -1,9 +1,9 @@
-package io.aimc.shipmentreciver.model;
+package io.aimc.shipmentreciver.dto;
 
 import lombok.Data;
 
 @Data
-public class Person {
+public class PersonDto {
     private Integer id;
     private String firstName;
     private String lastName;

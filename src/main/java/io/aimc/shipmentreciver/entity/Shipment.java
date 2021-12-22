@@ -29,14 +29,14 @@ public class Shipment {
     @Column(name = "raw_shipment", nullable = false, columnDefinition = "jsonb")
     private RawShipmentDto rawShipmentDto;
 
-    @Column(name = "sender", nullable = false)
+    @Column(nullable = false)
     private String sender;
 
     @Column
     private String content;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
+    @Column(nullable = false)
+    private String receiver;
 
     @Column(name = "portion_id", columnDefinition = "pg-uuid")
     private UUID portionId;
