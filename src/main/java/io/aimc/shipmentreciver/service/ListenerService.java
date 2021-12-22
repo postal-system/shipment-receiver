@@ -1,6 +1,6 @@
 package io.aimc.shipmentreciver.service;
 
-import io.aimc.shipmentreciver.model.RawShipment;
+import io.aimc.shipmentreciver.dto.RawShipmentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,8 +13,8 @@ public class ListenerService {
     private final ShipmentService shipmentService;
 
     @KafkaListener(topics = "${spring.kafka.topic}")
-    public void get(RawShipment rawShipment) {
-        log.info("received: {}", rawShipment.toString());
-        shipmentService.add(rawShipment);
+    public void get(RawShipmentDto rawShipmentDto) {
+        log.info("received: {}", rawShipmentDto.toString());
+        shipmentService.add(rawShipmentDto);
     }
 }

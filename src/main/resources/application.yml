@@ -18,7 +18,7 @@ spring:
   rabbitmq:
     queue: "portionsofshipments"
 scheduler:
-  fixed-delay: 6000
+  fixed-delay: 60000
 portion:
   size: 10
 server:

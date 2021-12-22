@@ -1,7 +1,7 @@
 package io.aimc.shipmentreciver.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import io.aimc.shipmentreciver.model.RawShipment;
+import io.aimc.shipmentreciver.dto.RawShipmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class Shipment {
 
     @Type(type = "jsonb")
     @Column(name = "raw_shipment", nullable = false, columnDefinition = "jsonb")
-    private RawShipment rawShipment;
+    private RawShipmentDto rawShipmentDto;
 
     @Column(name = "sender", nullable = false)
     private String sender;
