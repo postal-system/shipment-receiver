@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    @Value("${spring.rabbitmq.queue}")
-    private String queue;
+    @Value("${spring.rabbitmq.portion-queue}")
+    private String portionQueue;
 
     @Bean
-    public Queue queue() {
-        return new Queue(queue);
+    public Queue portionQueue() {
+        return new Queue(portionQueue);
     }
 
     @Bean

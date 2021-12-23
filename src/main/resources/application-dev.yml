@@ -7,7 +7,8 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
     bootstrap-servers: 130.193.56.118:9092
-    topic: "shipments"
+    shipment-topic: "shipments"
+    portion-topic: "portions"
     consumer:
       auto-offset-reset: earliest
       groupId: "shipment"
@@ -16,7 +17,8 @@ spring:
       name: "personservice"
       url: "http://130.193.56.118:8081"
   rabbitmq:
-    queue: "portionsofshipments"
+    portion-queue: "portionsofshipments"
+  active-broker: RABBITMQ
 scheduler:
   fixed-delay: 3600000
 portion:
