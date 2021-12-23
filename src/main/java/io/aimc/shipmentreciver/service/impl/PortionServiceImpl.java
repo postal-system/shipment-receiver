@@ -18,8 +18,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import static io.aimc.shipmentreciver.model.Broker.KAFKA;
-import static io.aimc.shipmentreciver.model.Broker.RABBITMQ;
 import static java.util.stream.Collectors.toList;
 
 @Service
