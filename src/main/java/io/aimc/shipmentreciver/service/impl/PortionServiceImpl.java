@@ -1,7 +1,7 @@
 package io.aimc.shipmentreciver.service.impl;
 
 import io.aimc.shipmentreciver.entity.Shipment;
-import io.aimc.shipmentreciver.model.Broker;
+import io.aimc.shipmentreciver.conf.Broker;
 import io.aimc.shipmentreciver.model.Portion;
 import io.aimc.shipmentreciver.repository.ShipmentRepository;
 import io.aimc.shipmentreciver.service.PortionService;
