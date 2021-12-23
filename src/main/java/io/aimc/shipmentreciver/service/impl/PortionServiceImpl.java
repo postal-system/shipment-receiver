@@ -45,7 +45,7 @@ public class PortionServiceImpl implements PortionService {
             case KAFKA:
                 sendToKafka(create());
                 break;
-            case RABBITMQ:
+            default:
                 sendToRabbitMQ(create());
                 break;
         }
