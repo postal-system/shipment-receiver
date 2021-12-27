@@ -1,9 +1,9 @@
 package io.aimc.shipmentreciver.service.impl;
 
-import io.aimc.shipmentreciver.entity.Shipment;
-import io.aimc.shipmentreciver.model.Broker;
+import io.aimc.shipmentreciver.entity.Letter;
+import io.aimc.shipmentreciver.conf.Broker;
 import io.aimc.shipmentreciver.model.Portion;
-import io.aimc.shipmentreciver.repository.ShipmentRepository;
+import io.aimc.shipmentreciver.repository.LetterRepository;
 import io.aimc.shipmentreciver.service.PortionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @RequiredArgsConstructor
 public class PortionServiceImpl implements PortionService {
-    private final ShipmentRepository shipmentRepository;
+    private final LetterRepository letterRepository;
     private final RabbitTemplate rabbitTemplate;
     private final KafkaTemplate<String, Portion> kafkaTemplate;
     @Value("${portion.size}")
@@ -50,11 +50,11 @@ public class PortionServiceImpl implements PortionService {
     }
 
     private Portion create() {
-        List<Shipment> shipments = shipmentRepository.getUnprocessed(portionSize);
+        List<Letter> letters = letterRepository.getUnprocessed(portionSize);
         UUID portionId = UUID.randomUUID();
-        shipments.forEach(shipment -> shipment.setPortionId(portionId));
-        shipmentRepository.saveAll(shipments);
-        return new Portion(portionId, shipments.stream().map(Shipment::getSourceId).collect(toList()));
+        letters.forEach(shipment -> shipment.setPortionId(portionId));
+        letterRepository.saveAll(letters);
+        return new Portion(portionId, letters.stream().map(Letter::getSourceId).collect(toList()));
     }
 
     private void sendToRabbitMQ(Portion portion) {

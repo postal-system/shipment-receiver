@@ -1,6 +1,7 @@
 package io.aimc.shipmentreciver.conf;
 
-import io.aimc.shipmentreciver.dto.RawShipmentDto;
+import io.aimc.shipmentreciver.dto.RawLetterDto;
+import io.aimc.shipmentreciver.dto.RawParcelDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ public class KafkaConsumerConfig {
     private String groupId;
 
     @Bean
-    public ConsumerFactory<String, RawShipmentDto> consumerFactory() {
+    public ConsumerFactory<String, RawLetterDto> consumerLetterFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -32,14 +33,35 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props,
                 new StringDeserializer(),
-                new JsonDeserializer<>(RawShipmentDto.class));
+                new JsonDeserializer<>(RawLetterDto.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, RawShipmentDto> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, RawShipmentDto> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, RawLetterDto> kafkaListenerLetterContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, RawLetterDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(consumerLetterFactory());
+        return factory;
+    }
+
+
+
+    @Bean
+    public ConsumerFactory<String, RawParcelDto> consumerParcelFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        return new DefaultKafkaConsumerFactory<>(props,
+                new StringDeserializer(),
+                new JsonDeserializer<>(RawParcelDto.class,false));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, RawParcelDto> kafkaListenerParcelContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, RawParcelDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerParcelFactory());
         return factory;
     }
 }

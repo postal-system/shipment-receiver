@@ -8,6 +8,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     shipment-topic: "shipments"
+    parcel-topic: "parcel"
     portion-topic: "portions"
     consumer:
       auto-offset-reset: earliest

@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Data
-public class RawShipmentDto {
+public class RawLetterDto {
     private UUID sourceId;
     private Instant timestamp;
     private Integer idReceiver;

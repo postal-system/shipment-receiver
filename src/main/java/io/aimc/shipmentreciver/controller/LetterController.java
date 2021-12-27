@@ -1,7 +1,7 @@
 package io.aimc.shipmentreciver.controller;
 
-import io.aimc.shipmentreciver.dto.ShipmentDto;
-import io.aimc.shipmentreciver.facade.ShipmentFacade;
+import io.aimc.shipmentreciver.dto.LetterDto;
+import io.aimc.shipmentreciver.facade.LetterFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +14,12 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/shipments")
-public class ShipmentController {
-    private final ShipmentFacade shipmentFacade;
+public class LetterController {
+    private final LetterFacade letterFacade;
 
     @GetMapping()
-    public List<ShipmentDto> getAllByIds(@RequestParam("ids") List<UUID> ids) {
-        return shipmentFacade.getAllByIds(ids);
+    public List<LetterDto> getAllByIds(@RequestParam("ids") List<UUID> ids) {
+        return letterFacade.getAllByIds(ids);
     }
 
 }

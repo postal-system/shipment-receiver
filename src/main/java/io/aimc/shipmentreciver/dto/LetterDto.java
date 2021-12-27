@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ShipmentDto {
+public class LetterDto {
     private UUID sourceId;
     private String sender;
     private String content;
