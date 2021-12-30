@@ -1,4 +1,4 @@
-package io.aimc.shipmentreciver.conf;
+package io.aimc.shipmentreciver.model;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
