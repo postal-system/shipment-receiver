@@ -15,8 +15,8 @@ public class ParcelListenerService {
     private final ParcelFacade parcelFacade;
 
     @KafkaListener(topics = "${spring.kafka.parcel-topic}", containerFactory = "kafkaListenerParcelContainerFactory")
-    public void getLetter(RawParcelDto rawLetterDto) {
-        log.info("received: {}", rawLetterDto);
-        parcelFacade.add(rawLetterDto);
+    public void getParcel(RawParcelDto rawParcelDto) {
+        log.info("received: {}", rawParcelDto);
+        parcelFacade.add(rawParcelDto);
     }
 }

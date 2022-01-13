@@ -14,8 +14,8 @@ public class LetterListenerService {
     private final LetterFacade letterFacade;
 
 
-    @KafkaListener(topics = "${spring.kafka.shipment-topic}", containerFactory = "kafkaListenerLetterContainerFactory")
-    public void getShipment(RawLetterDto rawLetterDto) {
+    @KafkaListener(topics = "${spring.kafka.letter-topic}", containerFactory = "kafkaListenerLetterContainerFactory")
+    public void getLetter(RawLetterDto rawLetterDto) {
         log.info("received: {}", rawLetterDto.toString());
         letterFacade.add(rawLetterDto);
     }

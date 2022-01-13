@@ -23,13 +23,13 @@ services:
       # HTTP management UI
       - 15672:15672
 
-  shipmentreceiverapp:
-    image: 'application:latest'
-    build:
-      context: .
-    container_name: shipmentgeneratorapp
-    depends_on:
-      - db
-      - rabbitmq
-    ports:
-      - 8082:8082
+#  shipmentreceiverapp:
+#    image: 'application:latest'
+#    build:
+#      context: .
+#    container_name: shipmentreceiverapp
+#    depends_on:
+#      - db
+#      - rabbitmq
+#    ports:
+#      - 8082:8082

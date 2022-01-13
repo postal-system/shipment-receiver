@@ -7,7 +7,7 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
     bootstrap-servers: localhost:9092
-    shipment-topic: "shipments"
+    letter-topic: "shipments"
     parcel-topic: "parcel"
     portion-topic: "portions"
     consumer:

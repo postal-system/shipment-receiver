@@ -8,6 +8,7 @@ import io.aimc.shipmentreciver.dto.RawLetterDto;
 import io.aimc.shipmentreciver.entity.Letter;
 import io.aimc.shipmentreciver.mapper.LetterMapper;
 import io.aimc.shipmentreciver.service.LetterService;
+import io.aimc.shipmentreciver.util.ShipmentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,22 +24,23 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class LetterFacade {
     private final LetterService letterService;
-    private final LetterMapper shipmentMapper;
+    private final LetterMapper letterMapper;
     private final PersonClient personClient;
 
     public List<LetterDto> getAllByIds(@RequestParam("ids") List<UUID> ids) {
-        return letterService.getAllByIds(ids).stream().map(shipmentMapper::toDto).collect(toList());
+        return letterService.getAllByIds(ids).stream().map(letterMapper::toDto).collect(toList());
     }
 
     public void add(RawLetterDto rawLetterDto) {
         try {
             PersonDto personDto = personClient.getById(rawLetterDto.getIdReceiver());
-            Letter letter = shipmentMapper.fromRawShipmentDto(rawLetterDto);
-            letter.setReceiver(personDto.getFirstName().concat(" ").concat(personDto.getLastName()).concat(" ").concat(personDto.getPatronymic()));
+            Letter letter = letterMapper.fromRawLetterDto(rawLetterDto);
+            String name = ShipmentUtil.getConcatName(personDto);
+            letter.setReceiver(name);
             letterService.add(letter);
         } catch (
                 FeignException.NotFound e) {
-            log.error("person not found");
+            log.error("letter ID: {} with person with ID: {} not found",rawLetterDto.getSourceId() , rawLetterDto.getIdReceiver());
         }
     }
 }

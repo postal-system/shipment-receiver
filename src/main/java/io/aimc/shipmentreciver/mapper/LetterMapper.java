@@ -18,5 +18,5 @@ public  interface LetterMapper {
             @Mapping(target = "receiver", ignore = true),
             @Mapping(target = "portionId", ignore = true)
     })
-    Letter fromRawShipmentDto(RawLetterDto rawLetterDto);
+    Letter fromRawLetterDto(RawLetterDto rawLetterDto);
 }

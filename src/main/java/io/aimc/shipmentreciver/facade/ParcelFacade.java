@@ -8,9 +8,9 @@ import io.aimc.shipmentreciver.dto.RawParcelDto;
 import io.aimc.shipmentreciver.entity.Parcel;
 import io.aimc.shipmentreciver.mapper.ParcelMapper;
 import io.aimc.shipmentreciver.service.ParcelService;
+import io.aimc.shipmentreciver.util.ShipmentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,14 +32,14 @@ public class ParcelFacade {
     }
 
     public void add(RawParcelDto rawParcelDto) {
-        log.info("received: {}", rawParcelDto);
         try {
             PersonDto personDto = personClient.getById(rawParcelDto.getIdReceiver());
-            Parcel parcel = parcelMapper.fromRawShipmentDto(rawParcelDto);
-            parcel.setReceiver(personDto.getFirstName().concat(" ").concat(personDto.getLastName()).concat(" ").concat(personDto.getPatronymic()));
+            Parcel parcel = parcelMapper.fromRawParcelDto(rawParcelDto);
+            String name = ShipmentUtil.getConcatName(personDto);
+            parcel.setReceiver(name);
             parcelService.add(parcel);
         } catch (FeignException.NotFound e) {
-            log.error("person not found");
+            log.error("Parcel ID: {} with person with ID: {} not found", rawParcelDto.getSourceId(), rawParcelDto.getIdReceiver());
         }
     }
 }

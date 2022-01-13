@@ -18,5 +18,5 @@ public interface ParcelMapper {
             @Mapping(target = "rawParcelDto", expression = "java(rawParcelDto)"),
             @Mapping(target = "receiver", ignore = true),
     })
-    Parcel fromRawShipmentDto(RawParcelDto rawParcelDto);
+    Parcel fromRawParcelDto(RawParcelDto rawParcelDto);
 }

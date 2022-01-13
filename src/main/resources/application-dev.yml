@@ -7,7 +7,8 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
     bootstrap-servers: 130.193.56.118:9092
-    shipment-topic: "shipments"
+    letter-topic: "shipments"
+    parcel-topic: "parcel"
     portion-topic: "portions"
     consumer:
       auto-offset-reset: earliest
