@@ -2,8 +2,10 @@ package io.aimc.shipmentreciver.facade;
 
 import feign.FeignException;
 import io.aimc.shipmentreciver.client.PersonClient;
+import io.aimc.shipmentreciver.client.PostOfficeClient;
 import io.aimc.shipmentreciver.dto.LetterDto;
 import io.aimc.shipmentreciver.dto.PersonDto;
+import io.aimc.shipmentreciver.dto.PostOfficeDto;
 import io.aimc.shipmentreciver.dto.RawLetterDto;
 import io.aimc.shipmentreciver.entity.Letter;
 import io.aimc.shipmentreciver.mapper.LetterMapper;
@@ -26,6 +28,7 @@ public class LetterFacade {
     private final LetterService letterService;
     private final LetterMapper letterMapper;
     private final PersonClient personClient;
+    private final PostOfficeClient postOfficeClient;
 
     public List<LetterDto> getAllByIds(@RequestParam("ids") List<UUID> ids) {
         return letterService.getAllByIds(ids).stream().map(letterMapper::toDto).collect(toList());
@@ -34,13 +37,17 @@ public class LetterFacade {
     public void add(RawLetterDto rawLetterDto) {
         try {
             PersonDto personDto = personClient.getById(rawLetterDto.getIdReceiver());
+            PostOfficeDto postOfficeDto = postOfficeClient.getById(rawLetterDto.getPostOfficeReceiverId());
             Letter letter = letterMapper.fromRawLetterDto(rawLetterDto);
             String name = ShipmentUtil.getConcatName(personDto);
             letter.setReceiver(name);
+            letter.setPostOfficeName(postOfficeDto.getName());
+            letter.setPostOfficeAddress(postOfficeDto.getAddress());
             letterService.add(letter);
         } catch (
                 FeignException.NotFound e) {
-            log.error("letter ID: {} with person with ID: {} not found",rawLetterDto.getSourceId() , rawLetterDto.getIdReceiver());
+            log.error("Person ID: {} or post office ID: {} with letter with ID: {} not found",
+                    rawLetterDto.getIdReceiver(), rawLetterDto.getPostOfficeReceiverId(), rawLetterDto.getId());
         }
     }
 }

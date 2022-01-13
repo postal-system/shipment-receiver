@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/shipments")
+@RequestMapping(value = "/api/letters")
 public class LetterController {
     private final LetterFacade letterFacade;
 

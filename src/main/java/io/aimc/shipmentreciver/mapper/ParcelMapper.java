@@ -17,6 +17,8 @@ public interface ParcelMapper {
     @Mappings({
             @Mapping(target = "rawParcelDto", expression = "java(rawParcelDto)"),
             @Mapping(target = "receiver", ignore = true),
+            @Mapping(target = "postOfficeName", ignore = true),
+            @Mapping(target = "postOfficeAddress", ignore = true)
     })
     Parcel fromRawParcelDto(RawParcelDto rawParcelDto);
 }

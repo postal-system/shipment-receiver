@@ -7,8 +7,9 @@ import java.util.UUID;
 
 @Data
 public class RawParcelDto {
-    private UUID sourceId;
-    private Integer idReceiver;
+    private UUID id;
     private Integer postOfficeReceiverId;
+    private Integer idReceiver;
     private String sender;
+    private Instant timestamp;
 }

@@ -13,9 +13,6 @@ import javax.persistence.Entity;
 @Entity
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Parcel extends Shipment {
-    @Column(name = "post_office_receiver_id")
-    private Integer postOfficeReceiverId;
-
     @Type(type = "jsonb")
     @Column(name = "raw_parcel", nullable = false, columnDefinition = "jsonb")
     private RawParcelDto rawParcelDto;

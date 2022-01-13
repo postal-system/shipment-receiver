@@ -4,11 +4,12 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Data;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.Column;
 import javax.persistence.InheritanceType;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -18,11 +19,20 @@ import java.util.UUID;
 public class Shipment {
     @Id
     @Column(name = "id", columnDefinition = "pg-uuid")
-    private UUID sourceId;
+    private UUID id;
 
     @Column(nullable = false)
     private String sender;
 
     @Column(nullable = false)
     private String receiver;
+
+    @Column(name = "post_office_name", nullable = false)
+    private String postOfficeName;
+
+    @Column(name = "post_office_address", nullable = false)
+    private String postOfficeAddress;
+
+    @Column(name = "time_stamp")
+    private Instant timestamp;
 }

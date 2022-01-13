@@ -7,19 +7,22 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
     bootstrap-servers: localhost:9092
-    letter-topic: "shipments"
+    letter-topic: "letter"
     parcel-topic: "parcel"
     portion-topic: "portions"
     consumer:
       auto-offset-reset: earliest
       groupId: "shipment"
   feign:
-    client:
+    person-client:
       name: "personservice"
       url: "http://localhost:8081"
+    post-office-client:
+      name: "postoffice"
+      url: "http://localhost:8084"
   rabbitmq:
     portion-queue: "portionsofshipments"
-  active-broker: RABBITMQ
+  active-broker: KAFKA
 scheduler:
   fixed-delay: 30000
 portion:

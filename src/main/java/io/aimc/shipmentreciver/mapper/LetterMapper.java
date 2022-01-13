@@ -16,7 +16,9 @@ public  interface LetterMapper {
     @Mappings({
             @Mapping(target = "rawLetterDto", expression = "java(rawLetterDto)"),
             @Mapping(target = "receiver", ignore = true),
-            @Mapping(target = "portionId", ignore = true)
+            @Mapping(target = "portionId", ignore = true),
+            @Mapping(target = "postOfficeName", ignore = true),
+            @Mapping(target = "postOfficeAddress", ignore = true)
     })
     Letter fromRawLetterDto(RawLetterDto rawLetterDto);
 }

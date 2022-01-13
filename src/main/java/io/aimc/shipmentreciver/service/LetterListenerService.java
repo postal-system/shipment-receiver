@@ -16,7 +16,7 @@ public class LetterListenerService {
 
     @KafkaListener(topics = "${spring.kafka.letter-topic}", containerFactory = "kafkaListenerLetterContainerFactory")
     public void getLetter(RawLetterDto rawLetterDto) {
-        log.info("received: {}", rawLetterDto.toString());
+        log.info("received: {}", rawLetterDto);
         letterFacade.add(rawLetterDto);
     }
 }

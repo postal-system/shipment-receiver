@@ -15,6 +15,7 @@ import java.util.UUID;
 @Entity
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Letter extends Shipment {
+    @Column
     private String content;
 
     @Column(name = "portion_id", columnDefinition = "pg-uuid")
@@ -24,6 +25,4 @@ public class Letter extends Shipment {
     @Column(name = "raw_letter", nullable = false, columnDefinition = "jsonb")
     private RawLetterDto rawLetterDto;
 
-    @Column(name = "time_stamp")
-    private Instant timestamp;
 }

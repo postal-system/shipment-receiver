@@ -54,7 +54,7 @@ public class PortionServiceImpl implements PortionService {
         UUID portionId = UUID.randomUUID();
         letters.forEach(shipment -> shipment.setPortionId(portionId));
         letterRepository.saveAll(letters);
-        return new Portion(portionId, letters.stream().map(Letter::getSourceId).collect(toList()));
+        return new Portion(portionId, letters.stream().map(Letter::getId).collect(toList()));
     }
 
     private void sendToRabbitMQ(Portion portion) {

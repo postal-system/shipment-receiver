@@ -6,8 +6,9 @@ import java.util.UUID;
 
 @Data
 public class ParcelDto {
-    private UUID sourceId;
-    private Integer postOfficeReceiverId;
+    private UUID id;
     private String receiver;
     private String sender;
+    private String postOfficeName;
+    private String postOfficeAddress;
 }

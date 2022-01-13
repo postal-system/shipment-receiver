@@ -4,6 +4,8 @@ create table if not exists letter (
   sender varchar(250) not null,
   content varchar(250),
   receiver varchar(250) not null,
+  post_office_name varchar(250) not null,
+  post_office_address varchar(250) not null,
   time_stamp timestamp,
   portion_id uuid
 );
@@ -13,5 +15,7 @@ create table if not exists parcel (
   raw_parcel jsonb not null,
   sender varchar(250) not null,
   receiver varchar(250) not null,
-  post_office_receiver_id int
+  post_office_name varchar(250) not null,
+  post_office_address varchar(250) not null,
+  time_stamp timestamp
 );

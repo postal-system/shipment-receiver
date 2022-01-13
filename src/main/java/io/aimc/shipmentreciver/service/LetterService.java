@@ -1,6 +1,5 @@
 package io.aimc.shipmentreciver.service;
 
-
 import io.aimc.shipmentreciver.entity.Letter;
 
 import java.util.List;
