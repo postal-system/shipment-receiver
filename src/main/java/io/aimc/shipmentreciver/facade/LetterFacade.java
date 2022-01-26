@@ -37,11 +37,12 @@ public class LetterFacade {
                     "Person ID: {} or post office ID: {} with letter with ID: {} not found",
                     rawLetterDto.getIdReceiver(),
                     rawLetterDto.getPostOfficeId(),
-                    rawLetterDto.getId(),
-                    e
+                    rawLetterDto.getId()
+//                    ,
+//                    e
             );
-        } catch (Exception e) {
-            log.error("error", e);
+//        } catch (Exception e) {
+//            log.error("error", e);
         }
     }
 }

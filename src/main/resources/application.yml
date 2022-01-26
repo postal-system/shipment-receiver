@@ -17,9 +17,6 @@ spring:
     person-client:
       name: "person-service"
       url: "http://localhost:8081"
-    post-office-client:
-      name: "post-office"
-      url: "http://localhost:8084"
     letter-client:
       name: "letter-service"
       url: "http://localhost:8086"
@@ -32,6 +29,6 @@ spring:
 scheduler:
   fixed-delay: 30000
 portion:
-  size: 30
+  size: 10
 server:
   port: 8082
