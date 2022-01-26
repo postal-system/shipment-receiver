@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://130.193.56.118:5433/pejt_shipment
+    url: jdbc:postgresql://130.193.56.118:5432/pejt_shipment
     username: postgres
     password: mcpmwC8gGwVKr4Q9xCKZEzEgS
   liquibase:
