@@ -3,6 +3,8 @@ spring:
     url: jdbc:postgresql://130.193.56.118:5432/pejt_shipment
     username: postgres
     password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+    hikari:
+      maximum-pool-size: 3
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
