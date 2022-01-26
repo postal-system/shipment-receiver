@@ -1,9 +1,8 @@
 package io.aimc.shipmentreciver.service.impl;
 
-import io.aimc.shipmentreciver.entity.Letter;
 import io.aimc.shipmentreciver.conf.Broker;
-import io.aimc.shipmentreciver.model.Portion;
-import io.aimc.shipmentreciver.repository.LetterRepository;
+import io.aimc.shipmentreciver.entity.Shipment;
+import io.aimc.shipmentreciver.repository.ShipmentRepository;
 import io.aimc.shipmentreciver.service.PortionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,16 +16,15 @@ import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class PortionServiceImpl implements PortionService {
-    private final LetterRepository letterRepository;
+    private final ShipmentRepository repository;
     private final RabbitTemplate rabbitTemplate;
-    private final KafkaTemplate<String, Portion> kafkaTemplate;
+    private final KafkaTemplate<String, List<UUID>> kafkaTemplate;
     @Value("${portion.size}")
     private Integer portionSize;
     @Value("${spring.rabbitmq.portion-queue}")
@@ -39,31 +37,17 @@ public class PortionServiceImpl implements PortionService {
     @Override
     @Transactional(rollbackOn = {AmqpConnectException.class, SQLException.class})
     public void preparePortion() {
-        switch (activeBroker) {
-            case KAFKA:
-                sendToKafka(create());
-                break;
-            default:
-                sendToRabbitMQ(create());
-                break;
+        List<UUID> list = repository.getPart(portionSize)
+                .stream()
+                .map(Shipment::getId)
+                .collect(Collectors.toList());
+        if (activeBroker == Broker.KAFKA) {
+            kafkaTemplate.send(portionTopic, list);
+            log.info("send to kafka {}", list);
+        } else {
+            rabbitTemplate.convertAndSend(portionQueue, list);
+            log.info("send to rabbit {}", list);
         }
-    }
-
-    private Portion create() {
-        List<Letter> letters = letterRepository.getUnprocessed(portionSize);
-        UUID portionId = UUID.randomUUID();
-        letters.forEach(shipment -> shipment.setPortionId(portionId));
-        letterRepository.saveAll(letters);
-        return new Portion(portionId, letters.stream().map(Letter::getId).collect(toList()));
-    }
-
-    private void sendToRabbitMQ(Portion portion) {
-        rabbitTemplate.convertAndSend(portionQueue, portion);
-        log.info("send to rabbit {}", portion);
-    }
-
-    private void sendToKafka(Portion portion) {
-        kafkaTemplate.send(portionTopic, portion);
-        log.info("send to kafka {}", portion);
+        list.forEach(repository::deleteById);
     }
 }

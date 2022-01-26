@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/shipment_store
+    url: jdbc:postgresql://localhost:5433/pejt_shipment
     username: postgres
     password: mcpmwC8gGwVKr4Q9xCKZEzEgS
   liquibase:
@@ -15,17 +15,23 @@ spring:
       groupId: "shipment"
   feign:
     person-client:
-      name: "personservice"
+      name: "person-service"
       url: "http://localhost:8081"
     post-office-client:
-      name: "postoffice"
+      name: "post-office"
       url: "http://localhost:8084"
+    letter-client:
+      name: "letter-service"
+      url: "http://localhost:8086"
+    parcel-client:
+      name: "parcel-service"
+      url: "http://localhost:8087"
   rabbitmq:
     portion-queue: "portionsofshipments"
   active-broker: KAFKA
 scheduler:
   fixed-delay: 30000
 portion:
-  size: 10
+  size: 30
 server:
   port: 8082

@@ -1,6 +1,5 @@
 package io.aimc.shipmentreciver.conf;
 
-import io.aimc.shipmentreciver.model.Portion;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,9 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -28,12 +29,12 @@ public class KafkaProducerConfig {
         return props;
     }
 
-    public ProducerFactory<String, Portion> producerFactory() {
+    public ProducerFactory<String, List<UUID>> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, Portion> kafkaTemplate() {
+    public KafkaTemplate<String, List<UUID>> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

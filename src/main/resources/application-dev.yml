@@ -1,31 +1,31 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://130.193.56.118:5433/shipment_store
-    username: postgres
-    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
-  liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
-  kafka:
-    bootstrap-servers: 130.193.56.118:9092
-    letter-topic: "letter"
-    parcel-topic: "parcel"
-    portion-topic: "portions"
-    consumer:
-      auto-offset-reset: earliest
-      groupId: "shipment"
-  feign:
-    person-client:
-      name: "personservice"
-      url: "http://130.193.56.118:8081"
-    post-office-client:
-      name: "postoffice"
-      url: "http://130.193.56.118:8084"
-  rabbitmq:
-    portion-queue: "portionsofshipments"
-  active-broker: KAFKA
-scheduler:
-  fixed-delay: 3600000
-portion:
-  size: 10
-server:
-  port: 8082
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://130.193.56.118:5433/pejt_shipment
+#    username: postgres
+#    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+#  liquibase:
+#    change-log: classpath:/db/changelog/db.changelog-master.yaml
+#  kafka:
+#    bootstrap-servers: 130.193.56.118:9092
+#    letter-topic: "letter"
+#    parcel-topic: "parcel"
+#    portion-topic: "portions"
+#    consumer:
+#      auto-offset-reset: earliest
+#      groupId: "shipment"
+#  feign:
+#    post-office-client:
+#      name: "postoffice"
+#      url: "http://130.193.56.118:8084"
+#    person-client:
+#      name: "personservice"
+#      url: "http://130.193.56.118:8081"
+#  rabbitmq:
+#    portion-queue: "portionsofshipments"
+#  active-broker: KAFKA
+#scheduler:
+#  fixed-delay: 3600000
+#portion:
+#  size: 10
+#server:
+#  port: 8082

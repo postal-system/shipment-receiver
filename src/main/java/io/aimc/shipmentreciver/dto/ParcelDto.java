@@ -2,13 +2,15 @@ package io.aimc.shipmentreciver.dto;
 
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
 public class ParcelDto {
     private UUID id;
-    private String receiver;
     private String sender;
-    private String postOfficeName;
-    private String postOfficeAddress;
+    private String receiver;
+    private Instant timestamp;
+    private Integer postOfficeId;
+    private RawParcelDto rawParcelDto;
 }

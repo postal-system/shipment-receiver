@@ -8,9 +8,9 @@ import java.util.UUID;
 @Data
 public class RawLetterDto {
     private UUID id;
-    private Instant timestamp;
+    private Integer postOfficeId;
     private Integer idReceiver;
-    private Integer postOfficeReceiverId;
-    private String content;
     private String sender;
+    private Instant timestamp;
+    private String content;
 }

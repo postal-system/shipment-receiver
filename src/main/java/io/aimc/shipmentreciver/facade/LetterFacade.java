@@ -1,53 +1,47 @@
 package io.aimc.shipmentreciver.facade;
 
 import feign.FeignException;
+import io.aimc.shipmentreciver.client.LetterClient;
 import io.aimc.shipmentreciver.client.PersonClient;
-import io.aimc.shipmentreciver.client.PostOfficeClient;
 import io.aimc.shipmentreciver.dto.LetterDto;
 import io.aimc.shipmentreciver.dto.PersonDto;
-import io.aimc.shipmentreciver.dto.PostOfficeDto;
 import io.aimc.shipmentreciver.dto.RawLetterDto;
-import io.aimc.shipmentreciver.entity.Letter;
+import io.aimc.shipmentreciver.entity.Shipment;
 import io.aimc.shipmentreciver.mapper.LetterMapper;
-import io.aimc.shipmentreciver.service.LetterService;
+import io.aimc.shipmentreciver.repository.ShipmentRepository;
 import io.aimc.shipmentreciver.util.ShipmentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
-import java.util.UUID;
-
-import static java.util.stream.Collectors.toList;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class LetterFacade {
-    private final LetterService letterService;
+    private final LetterClient letterClient;
     private final LetterMapper letterMapper;
     private final PersonClient personClient;
-    private final PostOfficeClient postOfficeClient;
-
-    public List<LetterDto> getAllByIds(@RequestParam("ids") List<UUID> ids) {
-        return letterService.getAllByIds(ids).stream().map(letterMapper::toDto).collect(toList());
-    }
+    private final ShipmentRepository shipmentRepository;
 
     public void add(RawLetterDto rawLetterDto) {
         try {
             PersonDto personDto = personClient.getById(rawLetterDto.getIdReceiver());
-            PostOfficeDto postOfficeDto = postOfficeClient.getById(rawLetterDto.getPostOfficeReceiverId());
-            Letter letter = letterMapper.fromRawLetterDto(rawLetterDto);
+            LetterDto letterDto = letterMapper.fromRawLetterDto(rawLetterDto);
             String name = ShipmentUtil.getConcatName(personDto);
-            letter.setReceiver(name);
-            letter.setPostOfficeName(postOfficeDto.getName());
-            letter.setPostOfficeAddress(postOfficeDto.getAddress());
-            letterService.add(letter);
-        } catch (
-                FeignException.NotFound e) {
-            log.error("Person ID: {} or post office ID: {} with letter with ID: {} not found",
-                    rawLetterDto.getIdReceiver(), rawLetterDto.getPostOfficeReceiverId(), rawLetterDto.getId());
+            letterDto.setReceiver(name);
+            letterClient.save(letterDto);
+            shipmentRepository.save(new Shipment(letterDto.getId()));
+
+        } catch (FeignException.NotFound e) {
+            log.error(
+                    "Person ID: {} or post office ID: {} with letter with ID: {} not found",
+                    rawLetterDto.getIdReceiver(),
+                    rawLetterDto.getPostOfficeId(),
+                    rawLetterDto.getId(),
+                    e
+            );
+        } catch (Exception e) {
+            log.error("error", e);
         }
     }
 }

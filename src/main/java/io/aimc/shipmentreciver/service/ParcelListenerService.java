@@ -1,6 +1,5 @@
 package io.aimc.shipmentreciver.service;
 
-import io.aimc.shipmentreciver.dto.RawLetterDto;
 import io.aimc.shipmentreciver.dto.RawParcelDto;
 import io.aimc.shipmentreciver.facade.ParcelFacade;
 import lombok.RequiredArgsConstructor;
