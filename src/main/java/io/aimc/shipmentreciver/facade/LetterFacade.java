@@ -3,6 +3,7 @@ package io.aimc.shipmentreciver.facade;
 import feign.FeignException;
 import io.aimc.shipmentreciver.client.LetterClient;
 import io.aimc.shipmentreciver.client.PersonClient;
+import io.aimc.shipmentreciver.client.PostOficeClient;
 import io.aimc.shipmentreciver.dto.LetterDto;
 import io.aimc.shipmentreciver.dto.PersonDto;
 import io.aimc.shipmentreciver.dto.RawLetterDto;
@@ -21,17 +22,20 @@ public class LetterFacade {
     private final LetterClient letterClient;
     private final LetterMapper letterMapper;
     private final PersonClient personClient;
+    private final PostOficeClient postOfficeClient;
     private final ShipmentRepository shipmentRepository;
 
     public void add(RawLetterDto rawLetterDto) {
         try {
             PersonDto personDto = personClient.getById(rawLetterDto.getIdReceiver());
             LetterDto letterDto = letterMapper.fromRawLetterDto(rawLetterDto);
+
+            postOfficeExist(rawLetterDto);
+
             String name = ShipmentUtil.getConcatName(personDto);
             letterDto.setReceiver(name);
             letterClient.save(letterDto);
             shipmentRepository.save(new Shipment(letterDto.getId()));
-
             log.info("send to letter-service: {}", letterDto);
         } catch (FeignException.NotFound e) {
             log.error(
@@ -41,8 +45,12 @@ public class LetterFacade {
                     rawLetterDto.getId(),
                     e
             );
-//        } catch (Exception e) {
-//            log.error("error", e);
+        } catch (Exception e) {
+            log.error("error", e);
         }
+    }
+
+    private void postOfficeExist(RawLetterDto rawLetterDto) {
+        postOfficeClient.getById(rawLetterDto.getPostOfficeId());
     }
 }

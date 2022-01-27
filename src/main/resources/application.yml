@@ -17,6 +17,9 @@ spring:
     person-client:
       name: "person-service"
       url: "http://localhost:8081"
+    post-office-client:
+      name: "post-office-service"
+      url: "http://localhost:8084"
     letter-client:
       name: "letter-service"
       url: "http://localhost:8086"

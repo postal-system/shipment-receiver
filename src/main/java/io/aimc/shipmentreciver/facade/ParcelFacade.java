@@ -3,8 +3,10 @@ package io.aimc.shipmentreciver.facade;
 import feign.FeignException;
 import io.aimc.shipmentreciver.client.ParcelClient;
 import io.aimc.shipmentreciver.client.PersonClient;
+import io.aimc.shipmentreciver.client.PostOficeClient;
 import io.aimc.shipmentreciver.dto.ParcelDto;
 import io.aimc.shipmentreciver.dto.PersonDto;
+import io.aimc.shipmentreciver.dto.RawLetterDto;
 import io.aimc.shipmentreciver.dto.RawParcelDto;
 import io.aimc.shipmentreciver.mapper.ParcelMapper;
 import io.aimc.shipmentreciver.util.ShipmentUtil;
@@ -19,6 +21,7 @@ public class ParcelFacade {
     private final ParcelMapper parcelMapper;
     private final ParcelClient parcelClient;
     private final PersonClient personClient;
+    private final PostOficeClient postOfficeClient;
 
     public void add(RawParcelDto rawParcelDto) {
         try {
@@ -27,6 +30,7 @@ public class ParcelFacade {
             String name = ShipmentUtil.getConcatName(personDto);
             parcelDto.setReceiver(name);
             parcelClient.save(parcelDto);
+            log.info("send to parcel-service: {}", parcelDto);
         } catch (FeignException.NotFound e) {
             log.error(
                     "Person ID: {} or post office ID: {} with parcel with ID: {} not found",
@@ -38,5 +42,9 @@ public class ParcelFacade {
         } catch (Exception e) {
             log.error("error", e);
         }
+    }
+
+    private void postOfficeExist(RawLetterDto rawLetterDto) {
+        postOfficeClient.getById(rawLetterDto.getPostOfficeId());
     }
 }

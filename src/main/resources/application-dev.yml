@@ -18,6 +18,9 @@ spring:
     person-client:
       name: "personservice"
       url: "http://130.193.56.118:8081"
+    post-office-client:
+      name: "post-office-service"
+      url: "http://130.193.56.118:8084"
     letter-client:
       name: "letter-service"
       url: "http://130.193.56.118:8086"
