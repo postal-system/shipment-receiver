@@ -16,16 +16,12 @@ spring:
       auto-offset-reset: earliest
       groupId: "shipment"
     person-client:
-      name: "personservice"
       url: "http://130.193.56.118:8081"
     post-office-client:
-      name: "post-office-service"
       url: "http://130.193.56.118:8084"
     letter-client:
-      name: "letter-service"
       url: "http://130.193.56.118:8086"
     parcel-client:
-      name: "parcel-service"
       url: "http://130.193.56.118:8087"
   rabbitmq:
     portion-queue: "portionsofshipments"
