@@ -2,7 +2,7 @@ package io.aimc.shipmentreciver.facade;
 
 import feign.FeignException;
 import io.aimc.shipmentreciver.client.LetterClient;
-import io.aimc.shipmentreciver.client.PersonClient;
+import io.aimc.shipmentreciver.client.UserClient;
 import io.aimc.shipmentreciver.client.PostOficeClient;
 import io.aimc.shipmentreciver.dto.LetterDto;
 import io.aimc.shipmentreciver.dto.PersonDto;
@@ -21,17 +21,15 @@ import org.springframework.stereotype.Component;
 public class LetterFacade {
     private final LetterClient letterClient;
     private final LetterMapper letterMapper;
-    private final PersonClient personClient;
+    private final UserClient userClient;
     private final PostOficeClient postOfficeClient;
     private final ShipmentRepository shipmentRepository;
 
     public void add(RawLetterDto rawLetterDto) {
         try {
-            PersonDto personDto = personClient.getById(rawLetterDto.getIdReceiver());
+            PersonDto personDto = userClient.getById(rawLetterDto.getIdReceiver());
             LetterDto letterDto = letterMapper.fromRawLetterDto(rawLetterDto);
-
             postOfficeExist(rawLetterDto);
-
             String name = ShipmentUtil.getConcatName(personDto);
             letterDto.setReceiver(name);
             letterClient.save(letterDto);

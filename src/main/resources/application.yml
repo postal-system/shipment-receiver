@@ -14,8 +14,8 @@ spring:
       auto-offset-reset: earliest
       groupId: "shipment"
   feign:
-    person-client:
-      url: "http://localhost:8081"
+    user-client:
+      url: "http://localhost:10100"
     post-office-client:
       url: "http://localhost:8084"
     letter-client:

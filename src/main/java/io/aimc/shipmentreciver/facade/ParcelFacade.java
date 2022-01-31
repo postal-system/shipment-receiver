@@ -2,7 +2,7 @@ package io.aimc.shipmentreciver.facade;
 
 import feign.FeignException;
 import io.aimc.shipmentreciver.client.ParcelClient;
-import io.aimc.shipmentreciver.client.PersonClient;
+import io.aimc.shipmentreciver.client.UserClient;
 import io.aimc.shipmentreciver.client.PostOficeClient;
 import io.aimc.shipmentreciver.dto.ParcelDto;
 import io.aimc.shipmentreciver.dto.PersonDto;
@@ -20,12 +20,12 @@ import org.springframework.stereotype.Component;
 public class ParcelFacade {
     private final ParcelMapper parcelMapper;
     private final ParcelClient parcelClient;
-    private final PersonClient personClient;
+    private final UserClient userClient;
     private final PostOficeClient postOfficeClient;
 
     public void add(RawParcelDto rawParcelDto) {
         try {
-            PersonDto personDto = personClient.getById(rawParcelDto.getIdReceiver());
+            PersonDto personDto = userClient.getById(rawParcelDto.getIdReceiver());
             ParcelDto parcelDto = parcelMapper.fromRawParcelDto(rawParcelDto);
             String name = ShipmentUtil.getConcatName(personDto);
             parcelDto.setReceiver(name);

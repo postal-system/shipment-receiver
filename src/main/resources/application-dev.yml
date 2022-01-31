@@ -15,8 +15,8 @@ spring:
     consumer:
       auto-offset-reset: earliest
       groupId: "shipment"
-    person-client:
-      url: "http://130.193.56.118:8081"
+    user-client:
+      url: "http://130.193.56.118:28080"
     post-office-client:
       url: "http://130.193.56.118:8084"
     letter-client:
