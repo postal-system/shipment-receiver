@@ -15,6 +15,7 @@ spring:
     consumer:
       auto-offset-reset: earliest
       groupId: "shipment"
+  feign:
     user-client:
       url: "http://130.193.56.118:28080"
     post-office-client:
