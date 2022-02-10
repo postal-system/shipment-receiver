@@ -1,6 +1,7 @@
 package io.aimc.shipmentreciver.service.impl;
 
 import io.aimc.shipmentreciver.conf.Broker;
+import io.aimc.shipmentreciver.dto.CreatePortionDto;
 import io.aimc.shipmentreciver.entity.Shipment;
 import io.aimc.shipmentreciver.repository.ShipmentRepository;
 import io.aimc.shipmentreciver.service.PortionService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 public class PortionServiceImpl implements PortionService {
     private final ShipmentRepository repository;
     private final RabbitTemplate rabbitTemplate;
-    private final KafkaTemplate<String, List<UUID>> kafkaTemplate;
+    private final KafkaTemplate<String, CreatePortionDto> kafkaTemplate;
     @Value("${portion.size}")
     private Integer portionSize;
     @Value("${spring.rabbitmq.portion-queue}")
@@ -41,8 +43,9 @@ public class PortionServiceImpl implements PortionService {
                 .stream()
                 .map(Shipment::getId)
                 .collect(Collectors.toList());
+        CreatePortionDto dto = new CreatePortionDto(list, LocalDateTime.now());
         if (activeBroker == Broker.KAFKA) {
-            kafkaTemplate.send(portionTopic, list);
+            kafkaTemplate.send(portionTopic, dto);
             log.info("send to kafka {}", list);
         } else {
             rabbitTemplate.convertAndSend(portionQueue, list);

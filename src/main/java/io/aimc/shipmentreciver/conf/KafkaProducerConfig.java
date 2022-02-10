@@ -1,5 +1,6 @@
 package io.aimc.shipmentreciver.conf;
 
+import io.aimc.shipmentreciver.dto.CreatePortionDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,9 +12,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -29,12 +28,12 @@ public class KafkaProducerConfig {
         return props;
     }
 
-    public ProducerFactory<String, List<UUID>> producerFactory() {
+    public ProducerFactory<String, CreatePortionDto> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, List<UUID>> kafkaTemplate() {
+    public KafkaTemplate<String, CreatePortionDto> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
