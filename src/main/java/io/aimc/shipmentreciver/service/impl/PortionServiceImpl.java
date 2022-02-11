@@ -46,10 +46,10 @@ public class PortionServiceImpl implements PortionService {
         CreatePortionDto dto = new CreatePortionDto(list, LocalDateTime.now());
         if (activeBroker == Broker.KAFKA) {
             kafkaTemplate.send(portionTopic, dto);
-            log.info("[KAFKA: {}] #### <- {}", portionTopic, list);
+            log.info("[KAFKA: {}] #### <- {}", portionTopic, dto);
         } else {
             rabbitTemplate.convertAndSend(portionQueue, list);
-            log.info("[RABBIT: {}] #### <- {}", portionQueue, list);
+            log.info("[RABBIT: {}] #### <- {}", portionQueue, dto);
         }
         list.forEach(repository::deleteById);
     }
