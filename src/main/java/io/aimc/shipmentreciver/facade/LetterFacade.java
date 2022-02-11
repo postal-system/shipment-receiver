@@ -34,7 +34,7 @@ public class LetterFacade {
             letterDto.setReceiver(name);
             letterClient.save(letterDto);
             shipmentRepository.save(new Shipment(letterDto.getId()));
-            log.info("send to letter-service: {}", letterDto);
+            log.info("Send to letter-service: {}", letterDto);
         } catch (FeignException.NotFound e) {
             log.error(
                     "Person ID: {} or post office ID: {} with letter with ID: {} not found",
