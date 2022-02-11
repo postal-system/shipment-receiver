@@ -1,35 +1,35 @@
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://130.193.56.118:5432/pejt_shipment
-#    username: postgres
-#    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
-#    hikari:
-#      maximum-pool-size: 3
-#  liquibase:
-#    change-log: classpath:/db/changelog/db.changelog-master.yaml
-#  kafka:
-#    bootstrap-servers: 130.193.56.118:9092
-#    letter-topic: "letter"
-#    parcel-topic: "parcel"
-#    portion-topic: "letters"
-#    consumer:
-#      auto-offset-reset: earliest
-#      groupId: "shipment"
-#  feign:
-#    user-client:
-#      url: "http://130.193.56.118:28080"
-#    post-office-client:
-#      url: "http://130.193.56.118:8084"
-#    letter-client:
-#      url: "http://130.193.56.118:8086"
-#    parcel-client:
-#      url: "http://130.193.56.118:8087"
-#  rabbitmq:
-#    portion-queue: "portionsofshipments"
-#  active-broker: KAFKA
-#scheduler:
-#  fixed-delay: 3600000
-#portion:
-#  size: 10
-#server:
-#  port: 8082
+spring:
+  datasource:
+    url: jdbc:postgresql://130.193.56.118:5432/pejt_shipment
+    username: postgres
+    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+    hikari:
+      maximum-pool-size: 3
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: 130.193.56.118:9092
+    letter-topic: "letter"
+    parcel-topic: "parcel"
+    portion-topic: "letters"
+    consumer:
+      auto-offset-reset: earliest
+      groupId: "shipment"
+  feign:
+    user-client:
+      url: "http://130.193.56.118:28080"
+    post-office-client:
+      url: "http://130.193.56.118:8084"
+    letter-client:
+      url: "http://130.193.56.118:8086"
+    parcel-client:
+      url: "http://130.193.56.118:8087"
+  rabbitmq:
+    portion-queue: "portionsofshipments"
+  active-broker: KAFKA
+scheduler:
+  fixed-delay: 3600000
+portion:
+  size: 10
+server:
+  port: 8082
