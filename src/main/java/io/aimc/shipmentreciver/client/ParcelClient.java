@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "parcel-service", url = "${spring.feign.parcel-client.url}")
 public interface ParcelClient {
-    @PostMapping("/parcel")
+    @PostMapping("/api/parcels")
     void save(@RequestBody ParcelDto dto);
 }

@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "letter-service", url = "${spring.feign.letter-client.url}")
 public interface LetterClient {
-    @PostMapping("/letter")
+    @PostMapping("/api/letters")
     void save(@RequestBody LetterDto dto);
 }
