@@ -21,18 +21,18 @@ import org.springframework.stereotype.Component;
 public class LetterFacade {
     private final LetterClient letterClient;
     private final LetterMapper letterMapper;
-    private final UserClient userClient;
+//    private final UserClient userClient;
     private final PostOfficeClient postOfficeClient;
     private final ShipmentRepository shipmentRepository;
 
     public void add(RawLetterDto rawLetterDto) {
         try {
-            PersonDto personDto = userClient.getById(rawLetterDto.getIdReceiver());
+//            PersonDto personDto = userClient.getById(rawLetterDto.getIdReceiver());
             LetterDto letterDto = letterMapper.fromRawLetterDto(rawLetterDto);
-            postOfficeExist(rawLetterDto.getPostOfficeId());
-            String name = ShipmentUtil.getConcatName(personDto);
-            letterDto.setReceiver(name);
-//            letterDto.setReceiver("e e e");/* заглушка */
+//            postOfficeExist(rawLetterDto.getPostOfficeId());
+//            String name = ShipmentUtil.getConcatName(personDto);
+//            letterDto.setReceiver(name);
+            letterDto.setReceiver("e e e");/* заглушка */
             letterClient.save(letterDto);
             shipmentRepository.save(new Shipment(letterDto.getId()));
             log.info("Send to letter-service: {}", letterDto);
@@ -49,7 +49,7 @@ public class LetterFacade {
         }
     }
 
-    private void postOfficeExist(Integer postOfficeId) {
-        postOfficeClient.getById(postOfficeId);
-    }
+//    private void postOfficeExist(Integer postOfficeId) {
+//        postOfficeClient.getById(postOfficeId);
+//    }
 }

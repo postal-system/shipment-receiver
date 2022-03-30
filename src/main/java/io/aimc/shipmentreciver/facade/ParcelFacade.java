@@ -24,13 +24,13 @@ public class ParcelFacade {
 
     public void add(RawParcelDto rawParcelDto) {
         try {
-            PersonDto personDto = userClient.getById(rawParcelDto.getIdReceiver());
-            ParcelDto parcelDto = parcelMapper.fromRawParcelDto(rawParcelDto);
-            postOfficeExist(rawParcelDto.getPostOfficeId());
-            String name = ShipmentUtil.getConcatName(personDto);
-            parcelDto.setReceiver(name);
-            parcelClient.save(parcelDto);
-            log.info("send to parcel-service: {}", parcelDto);
+//            PersonDto personDto = userClient.getById(rawParcelDto.getIdReceiver());
+//            ParcelDto parcelDto = parcelMapper.fromRawParcelDto(rawParcelDto);
+//            postOfficeExist(rawParcelDto.getPostOfficeId());
+//            String name = ShipmentUtil.getConcatName(personDto);
+//            parcelDto.setReceiver(name);
+//            parcelClient.save(parcelDto);
+//            log.info("send to parcel-service: {}", parcelDto);
         } catch (FeignException.NotFound feignEx) {
             log.error(
                     "Person ID: {} or post office ID: {} with parcel with ID: {} not found",
