@@ -27,6 +27,7 @@ public class PortionServiceImpl implements PortionService {
     private final ShipmentRepository repository;
     private final RabbitTemplate rabbitTemplate;
     private final KafkaTemplate<String, CreatePortionDto> kafkaTemplate;
+
     @Value("${portion.size}")
     private Integer portionSize;
     @Value("${spring.rabbitmq.portion-queue}")

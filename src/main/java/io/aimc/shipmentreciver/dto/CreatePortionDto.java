@@ -11,6 +11,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreatePortionDto {
     private List<UUID> letterIds;
-    private LocalDateTime localDateTime;
-
+    private LocalDateTime timestamp;
 }

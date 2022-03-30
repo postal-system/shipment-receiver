@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 public class LetterListenerService {
     private final LetterFacade letterFacade;
 
-
-
     @KafkaListener(topics = "${spring.kafka.letter-topic}", containerFactory = "kafkaListenerLetterContainerFactory")
     public void getLetter(RawLetterDto rawLetterDto) {
         log.info("#### ->: {}", rawLetterDto);
