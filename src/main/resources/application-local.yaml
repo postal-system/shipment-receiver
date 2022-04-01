@@ -1,0 +1,36 @@
+spring:
+  feign:
+    user-client:
+      url: "http://localhost:10100"
+    post-office-client:
+      url: "http://localhost:8084"
+    letter-client:
+      url: "http://localhost:8086"
+    parcel-client:
+      url: "http://localhost:8087"
+  datasource:
+    url: jdbc:postgresql://localhost:5433/pejt_shipment
+    username: postgres
+    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: localhost:9092
+    letter-topic: "letter"
+    parcel-topic: "parcel"
+    portion-topic: "letters"
+    consumer:
+      auto-offset-reset: earliest
+      groupId: "shipment"
+  rabbitmq:
+    portion-queue: "portionsofshipments"
+  active-broker: KAFKA
+scheduler:
+  fixed-delay: 30000
+portion:
+  size: 10
+server:
+  port: 8082
+interceptor:
+  bootstrap: "localhost:9092"
+  topic: "url"

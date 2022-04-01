@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  db:
+    image: 'postgres:latest'
+    container_name: shipment_store_db
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mcpmwC8gGwVKr4Q9xCKZEzEgS
+      - POSTGRES_DB=pejt_shipment
+
+#   rabbitmq:
+#     image: 'rabbitmq:latest'
+#     container_name: rabbitmqbroker
+#     environment:
+#       RABBITMQ_USERNAME: trainee
+#       RABBITMQ_PASSWORD: A4Uy3AqYVOY6tqXxVhz0uQfEm
+#     ports:
+#       # AMQP protocol port
+#       - 5672:5672
+#       # HTTP management UI
+#       - 15672:15672
+
+#  shipmentreceiverapp:
+#    image: 'application:latest'
+#    build:
+#      context: .
+#    container_name: shipmentreceiverapp
+#    depends_on:
+#      - db
+#      - rabbitmq
+#    ports:
+#      - 8082:8082
