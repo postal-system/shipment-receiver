@@ -1,23 +1,23 @@
 spring:
   feign:
     user-client:
-      url: "http://130.193.56.118:28080"
+      url: "http://192.168.1.1:28080"
     post-office-client:
-      url: "http://130.193.56.118:8084"
+      url: "http://192.168.1.1:8084"
     letter-client:
-      url: "http://130.193.56.118:8086"
+      url: "http://192.168.1.1:8086"
     parcel-client:
-      url: "http://130.193.56.118:8087"
+      url: "http://192.168.1.1:8087"
   datasource:
-    url: jdbc:postgresql://130.193.56.118:5432/pejt_shipment
+    url: jdbc:postgresql://192.168.1.1:5432/pejt_shipment
     username: postgres
-    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+    password: 1234
     hikari:
       maximum-pool-size: 3
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
-    bootstrap-servers: 130.193.56.118:9092
+    bootstrap-servers: 192.168.1.1:9092
     letter-topic: "letter"
     parcel-topic: "parcel"
     portion-topic: "letters"
@@ -34,5 +34,5 @@ portion:
 server:
   port: 8082
 interceptor:
-  bootstrap: "130.193.56.118:9092"
+  bootstrap: "192.168.1.1:9092"
   topic: "url"
