@@ -9,7 +9,7 @@ services:
       - '5433:5432'
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=mcpmwC8gGwVKr4Q9xCKZEzEgS
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=pejt_shipment
 
 #   rabbitmq:
@@ -17,7 +17,7 @@ services:
 #     container_name: rabbitmqbroker
 #     environment:
 #       RABBITMQ_USERNAME: trainee
-#       RABBITMQ_PASSWORD: A4Uy3AqYVOY6tqXxVhz0uQfEm
+#       RABBITMQ_PASSWORD: 1234
 #     ports:
 #       # AMQP protocol port
 #       - 5672:5672

@@ -11,7 +11,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/pejt_shipment
     username: postgres
-    password: mcpmwC8gGwVKr4Q9xCKZEzEgS
+    password: 1234
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
