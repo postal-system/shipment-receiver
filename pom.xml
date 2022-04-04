@@ -170,7 +170,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.aimc.shipmentreciver.ShipmentReceiverApplication</mainClass>
+                            <mainClass>io.codero.shipmentreciver.ShipmentReceiverApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
